@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>TicTacToe</title>
+    <link rel="stylesheet" href="styles/tictactoe.css" type="text/css">
+</head>
+
+<body>
+    <div id="body">
+        <h1>TicTacToe</h1>
+        <div id="tictactoe-ctrl">
+            <select>
+                <option value="playerVsAIEasy">AI | Easy</option>
+                <option value="playerVsAIMedium">AI | Medium</option>
+                <option value="playerVsAIImpossible">AI | Impossible</option>
+                <option value="playerVsPlayer" selected="selected">Player vs Player</option>
+            </select>
+            <button id="tttctrl__restart">Restart</button>
+        </div>
+        <div id="tictactoe-advise" data-advise="empty">
+            <span class="ttta__x-won"><img src="media/cross.svg" alt="X"><span>Winner!</span></span>
+            <span class="ttta__x-turn"><img src="media/cross.svg" alt="X"><span>Turn</span></span>
+            <span class="ttta__o-won"><img src="media/circle.svg" alt="O"><span>Winner!</span></span>
+            <span class="ttta__o-turn"><img src="media/circle.svg" alt="O"><span>Turn</span></span>
+            <span class="ttta__draw"><span>Draw!</span></span>
+        </div>
+        <div id="tictactoe" data-player-turn="empty">
+            <!-- row 1 -->
+            <div class="tictactoe__row">
+                <button id="tttf__1" data-state="empty"></button>
+                <button id="tttf__2" data-state="empty"></button>
+                <button id="tttf__3" data-state="empty"></button>
+            </div>
+            
+            <!-- row 2 -->
+            <div class="tictactoe__row">
+                <button id="tttf__4" data-state="empty"></button>
+                <button id="tttf__5" data-state="empty"></button>
+                <button id="tttf__6" data-state="empty"></button>
+            </div>
+            
+            <!-- row 3 -->
+            <div class="tictactoe__row">
+                <button id="tttf__7" data-state="empty"></button>
+                <button id="tttf__8" data-state="empty"></button>
+                <button id="tttf__9" data-state="empty"></button>
+            </div>
+        </div>
+        <footer id="footer">
+            <a href="https://github.com/patrickgold/tictactoe" rel="noreferrer noopener">View on GitHub</a>&nbsp;&nbsp;&bull;&nbsp;&nbsp;
+            <!--<a href="./privacy.html" rel="noreferrer noopener">Privacy Policy</a>&nbsp;&nbsp;&bull;&nbsp;&nbsp;-->
+            <span>v0.1.0</span>
+        </footer>
+    </div>
+    <script src="scripts/TicTacToe.js"></script>
+    <script src="scripts/main.js"></script>
+</body>
+
+</html>
