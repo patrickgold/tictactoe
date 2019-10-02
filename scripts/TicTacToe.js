@@ -1,9 +1,14 @@
 const TTT = Object.freeze({
-    advise: Object.freeze({
+    advisor: Object.freeze({
         xWon: "xWon",
+        xWonAI: "xWonAI",
         xTurn: "xTurn",
+        xTurnSwitch: "xTurnSwitch",
+        xTurnAI: "xTurnAI",
         oWon: "oWon",
+        oWonAI: "oWonAI",
         oTurn: "oTurn",
+        oTurnAI: "oTurnAI",
         draw: "draw",
     }),
     mode: Object.freeze({
@@ -18,6 +23,16 @@ const TTT = Object.freeze({
         circle: "circle",
         random: "random",
     }),
+    possibleWinConstellations: [
+        [1,2,3],
+        [4,5,6],
+        [7,8,9],
+        [1,4,7],
+        [2,5,8],
+        [3,6,9],
+        [1,5,9],
+        [3,5,7],
+    ],
 });
 
 class TicTacToe {
@@ -25,8 +40,9 @@ class TicTacToe {
 
     _game = {
         activePlayerTurn: 0,
-        adviseElement: null,
+        advisorElement: null,
         field: [],
+        isAITurn: false,
         isRunning: false,
         mode: 0,
         tttElement: null,
@@ -36,11 +52,11 @@ class TicTacToe {
     /**
      * Contructs a new instance of TicTacToe.
      * @param {HTMLElement} tttElement The main game field html element.
-     * @param {HTMLElement} adviseElement The advise html element.
+     * @param {HTMLElement} advisorElement The advisor html element.
      */
-    constructor(tttElement, adviseElement) {
+    constructor(tttElement, advisorElement) {
         this._game.tttElement = tttElement;
-        this._game.adviseElement = adviseElement;
+        this._game.advisorElement = advisorElement;
         let that = this;
         tttElement.addEventListener("click", function (e) {
             that.handleClick(e);
@@ -50,10 +66,10 @@ class TicTacToe {
     /**
      * Starts a new game.
      * @param {String} mode The mode of the game.
-     * @param {String} beginner The beginning player, can be random, cross or circle.
+     * @param {boolean} [ignoreRunningGame] If starting game should ignore a running game.
      */
-    startGame(mode, beginner) {
-        if (this._game.isRunning) {
+    startGame(mode, ignoreRunningGame = false, aiShouldBegin = false) {
+        if (this._game.isRunning && !ignoreRunningGame) {
             alert("Game is already running!!");
             return;
         }
@@ -68,22 +84,32 @@ class TicTacToe {
             fields[i].className = "";
         }
         this._game.mode = mode;
+        this._game.isAITurn = this._game.mode.startsWith("playerVsAI") ? aiShouldBegin : false;
         this._game.turnCount = 0;
-        if (beginner == TTT.player.random) {
-            this._game.activePlayerTurn = Math.random() > 0.5 ? TTT.player.cross : TTT.player.circle;
-        } else if (beginner == TTT.player.empty) {
-            alert("Beginner can't be empty!");
-            return;
-        } else {
-            this._game.activePlayerTurn = beginner;
-        }
+        this._game.activePlayerTurn = TTT.player.cross;
         this._game.tttElement.setAttribute("data-player-turn", this._game.activePlayerTurn);
-        this._game.adviseElement.setAttribute("data-advise",
+        this._game.advisorElement.setAttribute("data-advisor",
             this._game.activePlayerTurn == TTT.player.cross
-            ? TTT.advise.xTurn : TTT.advise.oTurn
+            ? (this._game.mode.startsWith("playerVsAI") ? TTT.advisor.xTurnSwitch : TTT.advisor.xTurn) : TTT.advisor.oTurn
         );
         this._game.isRunning = true;
-        this._consoleLog("Starting a new game.");
+        this._consoleLog("Starting a new game.\nmode: " + this._game.mode);
+
+        if (!aiShouldBegin) {
+            return;
+        }
+        // start random ai move.
+        let fieldNum = 0;
+        // just select a random empty field.
+        while (fieldNum == 0) {
+            let tmp = Math.floor(Math.random() * (9 - 1 + 1)) + 1;
+            if (this._game.field[tmp - 1] == TTT.player.empty) {
+                fieldNum = tmp;
+            }
+        }
+        this.handleClick({
+            target: document.getElementById("tttf__" + fieldNum),
+        }, true);
     }
 
     /**
@@ -92,8 +118,7 @@ class TicTacToe {
     restart() {
         if (this._game.isRunning || this._game.turnCount >= 9) {
             this._consoleLog("Restarting the game.");
-            this._game.isRunning = false;
-            this.startGame(this._game.mode, TTT.player.random);
+            this.startGame(this._game.mode, true);
         }
     }
 
@@ -101,8 +126,8 @@ class TicTacToe {
      * Handles a click on the main game field.
      * @param {Event} e The event data of the click on the main game field.
      */
-    handleClick(e) {
-        if (!this._game.isRunning) {
+    handleClick(e, isFakeEvent = false) {
+        if (!this._game.isRunning || (!isFakeEvent && this._game.isAITurn)) {
             return;
         }
         if (e.target.id.startsWith("tttf__")) {
@@ -125,11 +150,61 @@ class TicTacToe {
                 } else {
                     this._game.activePlayerTurn = TTT.player.cross;
                 }
-                this._game.tttElement.setAttribute("data-player-turn", this._game.activePlayerTurn);
-                this._game.adviseElement.setAttribute("data-advise",
-                    this._game.activePlayerTurn == TTT.player.cross
-                    ? TTT.advise.xTurn : TTT.advise.oTurn
-                );
+                if (this._game.mode.startsWith("playerVsAI") && !this._game.isAITurn) {
+                    this._game.isAITurn = true;
+                    this._game.tttElement.setAttribute("data-player-turn", TTT.player.empty);
+                    this._game.advisorElement.setAttribute("data-advisor",
+                        this._game.activePlayerTurn == TTT.player.cross
+                        ? TTT.advisor.xTurnAI : TTT.advisor.oTurnAI
+                    );
+                    let that = this;
+                    setTimeout(function () {
+                        let fieldNum = 0;
+                        if (that._game.mode == TTT.mode.playerVsAIEasy) {
+                            // just select a random empty field.
+                            while (fieldNum == 0) {
+                                let tmp = Math.floor(Math.random() * (9 - 1 + 1)) + 1;
+                                if (that._game.field[tmp - 1] == TTT.player.empty) {
+                                    fieldNum = tmp;
+                                }
+                            }
+                        } else if (that._game.mode == TTT.mode.playerVsAIMedium) {
+                            // search for friendly 2 out of 3 rows.
+                            let tmp = that.searchForWinConstellation(that._game.activePlayerTurn);
+                            if (tmp > 0) {
+                                fieldNum = tmp;
+                            } else {
+                                // search for enemy 2 out of 3 rows.
+                                tmp = that.searchForWinConstellation(
+                                    that._game.activePlayerTurn == TTT.player.cross
+                                    ? TTT.player.circle : TTT.player.cross
+                                );
+                                if (tmp > 0) {
+                                    fieldNum = tmp;
+                                } else {
+                                    // if no row, search for random empty field.
+                                    while (fieldNum == 0) {
+                                        let tmp = Math.floor(Math.random() * (9 - 1 + 1)) + 1;
+                                        if (that._game.field[tmp - 1] == TTT.player.empty) {
+                                            fieldNum = tmp;
+                                        }
+                                    }
+                                }
+                            }
+                            
+                        }
+                        that.handleClick({
+                            target: document.getElementById("tttf__" + fieldNum),
+                        }, true);
+                    }, 750);
+                } else {
+                    this._game.isAITurn = false;
+                    this._game.tttElement.setAttribute("data-player-turn", this._game.activePlayerTurn);
+                    this._game.advisorElement.setAttribute("data-advisor",
+                        this._game.activePlayerTurn == TTT.player.cross
+                        ? TTT.advisor.xTurn : TTT.advisor.oTurn
+                    );
+                }
             }
         }
     }
@@ -140,26 +215,24 @@ class TicTacToe {
      */
     checkIfWonOrEnd() {
         let f = this._game.field, i, j, c;
-        let possibleWinConstellations = [
-            [1,2,3],
-            [4,5,6],
-            [7,8,9],
-            [1,4,7],
-            [2,5,8],
-            [3,6,9],
-            [1,5,9],
-            [3,5,7],
-        ];
-        for (i = 0; i < possibleWinConstellations.length; i++) {
-            c = possibleWinConstellations[i];
+        for (i = 0; i < TTT.possibleWinConstellations.length; i++) {
+            c = TTT.possibleWinConstellations[i];
             if (f[c[0] - 1] != TTT.player.empty && f[c[0] - 1] == f[c[1] - 1] && f[c[1] - 1] == f[c[2] - 1]) {
                 // win for either party
                 //alert(f[c[0] - 1] + " has won!");
-                this._consoleLog("Game has ended. " + f[c[0] - 1] + " has won!");
-                this._game.adviseElement.setAttribute("data-advise",
-                    f[c[0] - 1] == TTT.player.cross
-                    ? TTT.advise.xWon : TTT.advise.oWon
-                );
+                if (this._game.isAITurn) {
+                    this._consoleLog("Game has ended. " + f[c[0] - 1] + " (ai) has won!");
+                    this._game.advisorElement.setAttribute("data-advisor",
+                        f[c[0] - 1] == TTT.player.cross
+                        ? TTT.advisor.xWonAI : TTT.advisor.oWonAI
+                    );
+                } else {
+                    this._consoleLog("Game has ended. " + f[c[0] - 1] + " has won!");
+                    this._game.advisorElement.setAttribute("data-advisor",
+                        f[c[0] - 1] == TTT.player.cross
+                        ? TTT.advisor.xWon : TTT.advisor.oWon
+                    );
+                }
                 for (j = 0; j < c.length; j++) {
                     document.getElementById("tttf__" + c[j]).classList.add("won");
                 }
@@ -170,13 +243,38 @@ class TicTacToe {
             // draw
             //alert("draw!");
             this._consoleLog("Game has ended. It is a draw!");
-            this._game.adviseElement.setAttribute("data-advise", TTT.advise.draw);
+            this._game.advisorElement.setAttribute("data-advisor", TTT.advisor.draw);
             return true;
         }
         return false;
     }
 
+    /**
+     * 
+     * @param {String} player The type of player whose win con. should be searched.
+     * @returns {Number} The field number.
+     */
+    searchForWinConstellation(player) {
+        let f = this._game.field, i, c;
+        for (i = 0; i < TTT.possibleWinConstellations.length; i++) {
+            c = TTT.possibleWinConstellations[i];
+            if (f[c[0] - 1] == player && f[c[0] - 1] == f[c[1] - 1] && f[c[2] - 1] == TTT.player.empty) {
+                return c[2];
+            } else if (f[c[0] - 1] == player && f[c[0] - 1] == f[c[2] - 1] && f[c[1] - 1] == TTT.player.empty) {
+                return c[1];
+            } else if (f[c[1] - 1] == player && f[c[1] - 1] == f[c[2] - 1] && f[c[0] - 1] == TTT.player.empty) {
+                return c[0];
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * Formats a string before outputting it.
+     * @param {String} str The string to be formatted and outputted.
+     */
     _consoleLog(str) {
-        console.log(">> TicTacToe : " + str);
+        let prefix = ">> TicTacToe : ";
+        console.log(prefix + str.replace(/\n/g, "\n" + " ".repeat(prefix.length) + "> "));
     }
 }

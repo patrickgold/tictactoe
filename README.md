@@ -1,7 +1,7 @@
 # tictactoe
 Play TicTacToe on the web!
 
-[https://patrickgold.github.io/tictactoe](https://patrickgold.github.io/tictactoe)
+[https://patrickgold.github.io/tictactoe/](https://patrickgold.github.io/tictactoe/)
 
 ___
 
