@@ -33,12 +33,19 @@ const TTT = Object.freeze({
         [1,5,9],
         [3,5,7],
     ],
+    rand: function (min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    },
 });
 
 class TicTacToe {
     "use strict";
 
     _game = {
+        __aiImpossible: {
+            isLShapeCircle: false,
+            isTriangleCircle: false,
+        },
         activePlayerTurn: 0,
         advisorElement: null,
         field: [],
@@ -85,6 +92,8 @@ class TicTacToe {
         }
         this._game.mode = mode;
         this._game.isAITurn = this._game.mode.startsWith("playerVsAI") ? aiShouldBegin : false;
+        this._game.__aiImpossible.isLShapeCircle = false;
+        this._game.__aiImpossible.isTriangleCircle = false;
         this._game.turnCount = 0;
         this._game.activePlayerTurn = TTT.player.cross;
         this._game.tttElement.setAttribute("data-player-turn", this._game.activePlayerTurn);
@@ -100,12 +109,11 @@ class TicTacToe {
         }
         // start random ai move.
         let fieldNum = 0;
-        // just select a random empty field.
-        while (fieldNum == 0) {
-            let tmp = Math.floor(Math.random() * (9 - 1 + 1)) + 1;
-            if (this._game.field[tmp - 1] == TTT.player.empty) {
-                fieldNum = tmp;
-            }
+        if (this._game.mode == TTT.mode.playerVsAIImpossible) {
+            fieldNum = [1, 3, 7, 9][TTT.rand(0, 3)];
+        } else {
+            // just select a random empty field.
+            fieldNum = this.searchForEmptyField();
         }
         this.handleClick({
             target: document.getElementById("tttf__" + fieldNum),
@@ -125,6 +133,7 @@ class TicTacToe {
     /**
      * Handles a click on the main game field.
      * @param {Event} e The event data of the click on the main game field.
+     * @param {boolean} isFakeEvent Tells wether the given e object is a real event or not. Defaults to false.
      */
     handleClick(e, isFakeEvent = false) {
         if (!this._game.isRunning || (!isFakeEvent && this._game.isAITurn)) {
@@ -162,12 +171,7 @@ class TicTacToe {
                         let fieldNum = 0;
                         if (that._game.mode == TTT.mode.playerVsAIEasy) {
                             // just select a random empty field.
-                            while (fieldNum == 0) {
-                                let tmp = Math.floor(Math.random() * (9 - 1 + 1)) + 1;
-                                if (that._game.field[tmp - 1] == TTT.player.empty) {
-                                    fieldNum = tmp;
-                                }
-                            }
+                            fieldNum = that.searchForEmptyField();
                         } else if (that._game.mode == TTT.mode.playerVsAIMedium) {
                             // search for friendly 2 out of 3 rows.
                             let tmp = that.searchForWinConstellation(that._game.activePlayerTurn);
@@ -183,15 +187,188 @@ class TicTacToe {
                                     fieldNum = tmp;
                                 } else {
                                     // if no row, search for random empty field.
-                                    while (fieldNum == 0) {
-                                        let tmp = Math.floor(Math.random() * (9 - 1 + 1)) + 1;
-                                        if (that._game.field[tmp - 1] == TTT.player.empty) {
-                                            fieldNum = tmp;
+                                    fieldNum = that.searchForEmptyField();
+                                }
+                            }
+                        } else if (that._game.mode == TTT.mode.playerVsAIImpossible) {
+                            let tmp = -1, g = that._game, f = g.field,
+                                empty = TTT.player.empty,
+                                circle = TTT.player.circle,
+                                cross = TTT.player.cross;
+                            // search for friendly 2 out of 3 rows.
+                            tmp = that.searchForWinConstellation(that._game.activePlayerTurn);
+                            if (tmp > 0) {
+                                fieldNum = tmp;
+                            } else {
+                                if (g.activePlayerTurn == TTT.player.circle && g.turnCount == 1) {
+                                    if (f[5 - 1] != empty) {
+                                        tmp = [1, 3, 7, 9][TTT.rand(0, 3)];
+                                    } else if (
+                                        f[1 - 1] != empty ||
+                                        f[3 - 1] != empty ||
+                                        f[7 - 1] != empty ||
+                                        f[9 - 1] != empty
+                                    ) {
+                                        tmp = 5;
+                                    } else if (f[2 - 1] != empty) {
+                                        tmp = 8;
+                                    } else if (f[8 - 1] != empty) {
+                                        tmp = 2;
+                                    } else if (f[4 - 1] != empty) {
+                                        tmp = 6;
+                                    } else if (f[6 - 1] != empty) {
+                                        tmp = 4;
+                                    }
+                                } else if (g.activePlayerTurn == TTT.player.circle && g.turnCount == 3) {
+                                    if (
+                                        f[1 - 1] == cross && f[5 - 1] == circle && f[9 - 1] == cross ||
+                                        f[3 - 1] == cross && f[5 - 1] == circle && f[7 - 1] == cross
+                                    ) {
+                                        tmp = 2 * TTT.rand(1, 4);
+                                    }
+
+                                    else if (f[1 - 1] == circle && f[5 - 1] == cross && f[9 - 1] == cross) {
+                                        tmp = [3, 7][TTT.rand(0, 1)];
+                                    } else if (f[3 - 1] == circle && f[5 - 1] == cross && f[7 - 1] == cross) {
+                                        tmp = [1, 9][TTT.rand(0, 1)];
+                                    } else if (f[9 - 1] == circle && f[5 - 1] == cross && f[1 - 1] == cross) {
+                                        tmp = [3, 7][TTT.rand(0, 1)];
+                                    } else if (f[7 - 1] == circle && f[5 - 1] == cross && f[3 - 1] == cross) {
+                                        tmp = [1, 9][TTT.rand(0, 1)];
+                                    }
+
+                                    else if (f[2 - 1] == circle && f[5 - 1] == cross && f[8 - 1] == cross) {
+                                        tmp = [7, 9][TTT.rand(0, 1)];
+                                    } else if (f[6 - 1] == circle && f[5 - 1] == cross && f[4 - 1] == cross) {
+                                        tmp = [1, 7][TTT.rand(0, 1)];
+                                    } else if (f[8 - 1] == circle && f[5 - 1] == cross && f[2 - 1] == cross) {
+                                        tmp = [1, 3][TTT.rand(0, 1)];
+                                    } else if (f[4 - 1] == circle && f[5 - 1] == cross && f[6 - 1] == cross) {
+                                        tmp = [3, 9][TTT.rand(0, 1)];
+                                    }
+                                } else if (g.activePlayerTurn == TTT.player.cross && g.turnCount == 2) {
+                                    // ..o
+                                    // ...
+                                    // x..
+                                    if (f[1 - 1] != empty && f[9 - 1] != empty) {
+                                        tmp = [3, 7][TTT.rand(0, 1)];
+                                        g.__aiImpossible.isTriangleCircle = true;
+                                    } else if (f[3 - 1] != empty && f[7 - 1] != empty) {
+                                        tmp = [1, 9][TTT.rand(0, 1)];
+                                        g.__aiImpossible.isTriangleCircle = true;
+                                    }
+                                    
+                                    // ...
+                                    // .o.
+                                    // x..
+                                    else if (f[5 - 1] != empty && f[1 - 1] != empty) {
+                                        tmp = [6, 8][TTT.rand(0, 1)];
+                                    } else if (f[5 - 1] != empty && f[3 - 1] != empty) {
+                                        tmp = [4, 8][TTT.rand(0, 1)];
+                                    } else if (f[5 - 1] != empty && f[7 - 1] != empty) {
+                                        tmp = [2, 6][TTT.rand(0, 1)];
+                                    } else if (f[5 - 1] != empty && f[9 - 1] != empty) {
+                                        tmp = [2, 4][TTT.rand(0, 1)];
+                                    }
+                                    
+                                    // ...
+                                    // o..
+                                    // x..
+                                    else if (f[1 - 1] != empty && f[2 - 1] != empty) {
+                                        tmp = 4;
+                                        g.__aiImpossible.isLShapeCircle = true;
+                                    } else if (f[2 - 1] != empty && f[3 - 1] != empty) {
+                                        tmp = 6;
+                                        g.__aiImpossible.isLShapeCircle = true;
+                                    } else if (f[3 - 1] != empty && f[6 - 1] != empty) {
+                                        tmp = 2;
+                                        g.__aiImpossible.isLShapeCircle = true;
+                                    } else if (f[6 - 1] != empty && f[9 - 1] != empty) {
+                                        tmp = 8;
+                                        g.__aiImpossible.isLShapeCircle = true;
+                                    } else if (f[8 - 1] != empty && f[9 - 1] != empty) {
+                                        tmp = 6;
+                                        g.__aiImpossible.isLShapeCircle = true;
+                                    } else if (f[7 - 1] != empty && f[8 - 1] != empty) {
+                                        tmp = 4;
+                                        g.__aiImpossible.isLShapeCircle = true;
+                                    } else if (f[4 - 1] != empty && f[7 - 1] != empty) {
+                                        tmp = 8;
+                                        g.__aiImpossible.isLShapeCircle = true;
+                                    } else if (f[1 - 1] != empty && f[4 - 1] != empty) {
+                                        tmp = 2;
+                                        g.__aiImpossible.isLShapeCircle = true;
+                                    }
+                                    
+                                    // .o.
+                                    // ...
+                                    // x..
+                                    else if (f[1 - 1] != empty && f[8 - 1] != empty) {
+                                        tmp = 3;
+                                    } else if (f[3 - 1] != empty && f[8 - 1] != empty) {
+                                        tmp = 1;
+                                    } else if (f[3 - 1] != empty && f[4 - 1] != empty) {
+                                        tmp = 9;
+                                    } else if (f[9 - 1] != empty && f[4 - 1] != empty) {
+                                        tmp = 3;
+                                    } else if (f[9 - 1] != empty && f[2 - 1] != empty) {
+                                        tmp = 7;
+                                    } else if (f[7 - 1] != empty && f[2 - 1] != empty) {
+                                        tmp = 9;
+                                    } else if (f[7 - 1] != empty && f[6 - 1] != empty) {
+                                        tmp = 1;
+                                    } else if (f[1 - 1] != empty && f[6 - 1] != empty) {
+                                        tmp = 7;
+                                    }
+                                    
+                                    // o..
+                                    // ...
+                                    // x..
+                                    else if (f[1 - 1] == circle && f[7 - 1] == cross) {
+                                        tmp = 3;
+                                    } else if (f[1 - 1] == circle && f[3 - 1] == cross) {
+                                        tmp = 7;
+                                    } else if (f[3 - 1] == circle && f[1 - 1] == cross) {
+                                        tmp = 9;
+                                    } else if (f[3 - 1] == circle && f[9 - 1] == cross) {
+                                        tmp = 1;
+                                    } else if (f[9 - 1] == circle && f[3 - 1] == cross) {
+                                        tmp = 7;
+                                    } else if (f[9 - 1] == circle && f[7 - 1] == cross) {
+                                        tmp = 3;
+                                    } else if (f[7 - 1] == circle && f[9 - 1] == cross) {
+                                        tmp = 1;
+                                    } else if (f[7 - 1] == circle && f[1 - 1] == cross) {
+                                        tmp = 9;
+                                    } 
+                                } else if (g.activePlayerTurn == TTT.player.cross && g.turnCount == 4) {
+                                    if (f[5 - 1] == empty && g.__aiImpossible.isLShapeCircle) {
+                                        tmp = 5;
+                                    } else if (g.__aiImpossible.isTriangleCircle) {
+                                        if (f[1 - 1] == empty) {
+                                            tmp = 1;
+                                        } else if (f[3 - 1] == empty) {
+                                            tmp = 3;
+                                        } else if (f[7 - 1] == empty) {
+                                            tmp = 7;
+                                        } else if (f[9 - 1] == empty) {
+                                            tmp = 9;
                                         }
                                     }
                                 }
+                                if (tmp > 0) {
+                                    fieldNum = tmp;
+                                } else {
+                                    // search for enemy 2 out of 3 rows.
+                                    tmp = that.searchForWinConstellation(that.getOtherPlayer(g.activePlayerTurn));
+                                    if (tmp > 0) {
+                                        fieldNum = tmp;
+                                    } else {
+                                        // if no row, search for random empty field.
+                                        fieldNum = that.searchForEmptyField();
+                                    }
+                                }
                             }
-                            
                         }
                         that.handleClick({
                             target: document.getElementById("tttf__" + fieldNum),
@@ -267,6 +444,33 @@ class TicTacToe {
             }
         }
         return -1;
+    }
+
+    /**
+     * Searches for a random empty field.
+     * @returns {Number} The field number or -1 if no empty field exists.
+     */
+    searchForEmptyField() {
+        let tmp;
+        // check if field has at least 1 empty field to prevent endless loop.
+        if (!this._game.field.includes(TTT.player.empty)) {
+            return -1;
+        }
+        // search for random field.
+        while (1) {
+            tmp = TTT.rand(1, 9);
+            if (this._game.field[tmp - 1] == TTT.player.empty) {
+                return tmp;
+            }
+        }
+    }
+
+    /**
+     * Gets the other player from the given one.
+     * @param {String} player The given player.
+     */
+    getOtherPlayer(player) {
+        return player == TTT.player.cross ? TTT.player.circle : TTT.player.cross;
     }
 
     /**
