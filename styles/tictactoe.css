@@ -27,6 +27,47 @@ button:not([data-state]):active {
     background-color: #777;
     transform: translateY(2px);
 }
+.select {
+    background-color: #eee;
+    border: 4px solid transparent;
+    border-radius: 4px;
+    cursor: pointer;
+    display: block;
+    position: relative;
+    transition: 200ms ease;
+}
+.select > select {
+    -webkit-appearance: none;
+    -ms-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background: none;
+    border: none;
+    box-shadow: none;
+    cursor: pointer;
+    outline: none;
+    padding: 6px 24px 6px 6px;
+}
+.select:hover {
+    border-color: #777;
+}
+.select:active {
+    background-color: #777;
+}
+.select::after {
+    background-image: url(../media/dropdown-arrow.svg);
+    background-position: center center;
+    background-repeat: no-repeat;
+    content: "";
+    display: block;
+    height: 12px;
+    pointer-events: none !important;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translate(-6px, -50%);
+    width: 12px;
+}
 
 
 #body {

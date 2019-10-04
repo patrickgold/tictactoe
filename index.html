@@ -12,12 +12,14 @@
     <div id="body">
         <h1>TicTacToe</h1>
         <div id="tictactoe-ctrl">
-            <select id="tttctrl__mode">
-                <option value="playerVsAIEasy">AI | Easy</option>
-                <option value="playerVsAIMedium">AI | Medium</option>
-                <option value="playerVsAIImpossible">AI | Impossible</option>
-                <option value="playerVsPlayer" selected="selected">Player vs Player</option>
-            </select>
+            <div class="select">
+                <select id="tttctrl__mode">
+                    <option value="playerVsAIEasy">AI | Easy</option>
+                    <option value="playerVsAIMedium">AI | Medium</option>
+                    <option value="playerVsAIImpossible">AI | Impossible</option>
+                    <option value="playerVsPlayer" selected="selected">Player vs Player</option>
+                </select>
+            </div>
             <button id="tttctrl__restart">Restart</button>
         </div>
         <div id="tictactoe-advisor" data-advisor="empty">
@@ -57,7 +59,7 @@
         <footer id="footer">
             <a href="https://github.com/patrickgold/tictactoe" rel="noreferrer noopener">View on GitHub</a>&nbsp;&nbsp;&bull;&nbsp;&nbsp;
             <!--<a href="./privacy.html" rel="noreferrer noopener">Privacy Policy</a>&nbsp;&nbsp;&bull;&nbsp;&nbsp;-->
-            <span>v0.3.0</span>
+            <span>v0.3.1</span>
         </footer>
     </div>
     <script src="scripts/TicTacToe.js"></script>

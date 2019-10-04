@@ -1,3 +1,5 @@
+"use strict";
+
 const TTT = Object.freeze({
     advisor: Object.freeze({
         xWon: "xWon",
@@ -39,8 +41,6 @@ const TTT = Object.freeze({
 });
 
 class TicTacToe {
-    "use strict";
-
     _game = {
         __aiImpossible: {
             isLShapeCircle: false,
@@ -48,6 +48,7 @@ class TicTacToe {
         },
         activePlayerTurn: 0,
         advisorElement: null,
+        aiMoveTimeoutID: 0,
         field: [],
         isAITurn: false,
         isRunning: false,
@@ -94,6 +95,7 @@ class TicTacToe {
         this._game.isAITurn = this._game.mode.startsWith("playerVsAI") ? aiShouldBegin : false;
         this._game.__aiImpossible.isLShapeCircle = false;
         this._game.__aiImpossible.isTriangleCircle = false;
+        clearTimeout(this._game.aiMoveTimeoutID);
         this._game.turnCount = 0;
         this._game.activePlayerTurn = TTT.player.cross;
         this._game.tttElement.setAttribute("data-player-turn", this._game.activePlayerTurn);
@@ -167,7 +169,7 @@ class TicTacToe {
                         ? TTT.advisor.xTurnAI : TTT.advisor.oTurnAI
                     );
                     let that = this;
-                    setTimeout(function () {
+                    this._game.aiMoveTimeoutID = setTimeout(function () {
                         let fieldNum = 0;
                         if (that._game.mode == TTT.mode.playerVsAIEasy) {
                             // just select a random empty field.
