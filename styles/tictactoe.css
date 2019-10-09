@@ -10,23 +10,26 @@ a {
     color: #000;
     text-decoration: underline;
 }
-button:not([data-state]) {
+.button {
     background-color: #bbb;
     border: 4px solid transparent;
     border-radius: 4px;
     color: #000;
     cursor: pointer;
+    font-size: 0.83em;
     outline: none;
     padding: 6px 12px;
     transition: 200ms ease;
+    user-select: none;
 }
-button:not([data-state]):hover {
+.button:hover {
     border-color: #777;
 }
-button:not([data-state]):active {
+.button:active {
     background-color: #777;
     transform: translateY(2px);
 }
+::-moz-focus-inner {border:0;}
 .select {
     background-color: #eee;
     border: 4px solid transparent;
@@ -45,6 +48,7 @@ button:not([data-state]):active {
     border: none;
     box-shadow: none;
     cursor: pointer;
+    font-size: 0.83em;
     outline: none;
     padding: 6px 24px 6px 6px;
 }
@@ -76,16 +80,18 @@ button:not([data-state]):active {
     flex-direction: column;
     margin: 0px auto;
     width: 100%;
-    max-width: 240px;
+    max-width: 300px;
 }
 
 
 #tictactoe {
     background-color: #bbb;
     border-radius: 4px;
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
     padding: 6px;
+    width: 240px;
 }
 
 #tictactoe > .tictactoe__row {
@@ -97,6 +103,7 @@ button:not([data-state]):active {
     background-color: #ddd;
     border: 4px solid transparent;
     border-radius: 4px;
+    box-sizing: border-box;
     display: flex;
     height: 64px;
     margin: 6px;
@@ -134,6 +141,7 @@ button:not([data-state]):active {
 #tictactoe > .tictactoe__row > button::after {
     background-position: center center;
     background-repeat: no-repeat;
+    background-size: 75% 75%;
     content: "";
     display: block;
     height: 100%;
@@ -156,6 +164,13 @@ button:not([data-state]):active {
     justify-content: space-between;
     margin: 0 0 16px 0;
     width: 100%;
+}
+#tictactoe-ctrl > .buttons {
+    display: flex;
+    flex-direction: row;
+}
+#tictactoe-ctrl > .buttons > .button:nth-child(n) {
+    margin-right: 8px;
 }
 
 
@@ -217,45 +232,116 @@ button:not([data-state]):active {
     display: block;
     padding: 0 0 0 6px;
 }
-#tictactoe-advisor[data-advisor="xWon"] > div.ttta__x-won {
-    opacity: 1.0;
-    z-index: 1;
-}
-#tictactoe-advisor[data-advisor="xWonAI"] > div.ttta__x-won-ai {
-    opacity: 1.0;
-    z-index: 1;
-}
-#tictactoe-advisor[data-advisor="xTurn"] > div.ttta__x-turn {
-    opacity: 1.0;
-    z-index: 1;
-}
-#tictactoe-advisor[data-advisor="xTurnSwitch"] > div.ttta__x-turn-switch {
-    opacity: 1.0;
-    z-index: 1;
-}
-#tictactoe-advisor[data-advisor="xTurnAI"] > div.ttta__x-turn-ai {
-    opacity: 1.0;
-    z-index: 1;
-}
-#tictactoe-advisor[data-advisor="oWon"] > div.ttta__o-won {
-    opacity: 1.0;
-    z-index: 1;
-}
-#tictactoe-advisor[data-advisor="oWonAI"] > div.ttta__o-won-ai {
-    opacity: 1.0;
-    z-index: 1;
-}
-#tictactoe-advisor[data-advisor="oTurn"] > div.ttta__o-turn {
-    opacity: 1.0;
-    z-index: 1;
-}
-#tictactoe-advisor[data-advisor="oTurnAI"] > div.ttta__o-turn-ai {
-    opacity: 1.0;
-    z-index: 1;
-}
+#tictactoe-advisor[data-advisor="xWon"] > div.ttta__x-won,
+#tictactoe-advisor[data-advisor="xWonAI"] > div.ttta__x-won-ai,
+#tictactoe-advisor[data-advisor="xTurn"] > div.ttta__x-turn,
+#tictactoe-advisor[data-advisor="xTurnSwitch"] > div.ttta__x-turn-switch,
+#tictactoe-advisor[data-advisor="xTurnAI"] > div.ttta__x-turn-ai,
+#tictactoe-advisor[data-advisor="oWon"] > div.ttta__o-won,
+#tictactoe-advisor[data-advisor="oWonAI"] > div.ttta__o-won-ai,
+#tictactoe-advisor[data-advisor="oTurn"] > div.ttta__o-turn,
+#tictactoe-advisor[data-advisor="oTurnAI"] > div.ttta__o-turn-ai,
 #tictactoe-advisor[data-advisor="draw"] > div.ttta__draw {
     opacity: 1.0;
     z-index: 1;
+}
+
+
+#tictactoe-help {
+    align-items: center;
+    background-color: rgba(0,0,0,0.35);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: center;
+    opacity: 0;
+    position: fixed;
+    transition: 200ms ease;
+    width: 100%;
+    z-index: -1;
+}
+#show-help-dialog:checked + #body #tictactoe-help {
+    opacity: 1;
+    z-index: 9000;
+}
+#tictactoe-help > .content {
+    background-color: #eee;
+    border: 4px solid #bbb;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    font-size: 0.83em;
+    height: calc(100% - 8px);
+    max-height: 600px;
+    overflow-y: auto;
+    position: relative;
+    width: calc(100% - 8px);
+    max-width: 800px;
+}
+#tictactoe-help > .content > * {
+    margin: 0 16px 0 16px;
+}
+#tictactoe-help > .content > .button {
+    align-self: flex-end;
+    font-size: inherit;
+    margin: 16px 16px 0 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+#tictactoe-help > .content > h2 {
+    border-bottom: 2px solid #bbb;
+    font-size: 1.2em;
+    margin-bottom: 16px;
+    padding-bottom: 4px;
+}
+#tictactoe-help > .content > h2:nth-child(n) {
+    margin-top: 16px;
+}
+#tictactoe-help > .content > h2.how-to-play {
+    color: #db9a0f;
+}
+#tictactoe-help > .content > h2.keyboard-shortcuts {
+    color: #20db0f;
+}
+#tictactoe-help > .content > h3 {
+    font-size: inherit;
+    margin-bottom: 8px;
+}
+#tictactoe-help > .content > p {
+    font-size: inherit;
+    margin-bottom: 16px;
+}
+#tictactoe-help > .content > p + h2 {
+    margin-top: 16px;
+}
+#tictactoe-help > .content > table {
+    border-collapse: collapse;
+    font-size: inherit;
+    margin-bottom: 16px;
+    text-align: left;
+}
+#tictactoe-help > .content > table td,
+#tictactoe-help > .content > table th {
+    border: 1px solid #bbb;
+    border-left: none;
+    border-right: none;
+    font-size: inherit;
+    padding: 8px 16px 8px 0;
+}
+#tictactoe-help > .content > table th {
+    border-top: none;
+    padding-top: 0px;
+}
+#tictactoe-help > .content .key {
+    background-color: #ccc;
+    border-radius: 3px;
+    font-family: 'Courier New', Courier, monospace;
+    margin-right: 8px;
+    padding: 4px 8px;
+}
+#tictactoe-help > .content .key.multi {
+    margin-left: 8px;
 }
 
 

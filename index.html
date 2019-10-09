@@ -9,24 +9,28 @@
 </head>
 
 <body>
+    <input type="checkbox" id="show-help-dialog" value="false" style="display:none;">
     <div id="body">
         <h1>TicTacToe</h1>
         <div id="tictactoe-ctrl">
             <div class="select">
-                <select id="tttctrl__mode">
+                <select id="tttctrl__mode" title="Select game mode">
                     <option value="playerVsAIEasy">AI | Easy</option>
                     <option value="playerVsAIMedium">AI | Medium</option>
                     <option value="playerVsAIImpossible">AI | Impossible</option>
                     <option value="playerVsPlayer" selected="selected">Player vs Player</option>
                 </select>
             </div>
-            <button id="tttctrl__restart">Restart</button>
+            <div class="buttons">
+                <button class="button" id="tttctrl__restart" title="Start a new game">Restart</button>
+                <label class="button" for="show-help-dialog" title="Show help dialog">?</label>
+            </div>
         </div>
         <div id="tictactoe-advisor" data-advisor="empty">
             <div class="ttta__x-won"><img src="media/cross.svg" alt="X"><span>Winner!</span></div>
             <div class="ttta__x-won-ai"><img src="media/cross.svg" alt="X"><span>Winner! (AI)</span></div>
             <div class="ttta__x-turn"><img src="media/cross.svg" alt="X"><span>Turn</span></div>
-            <div class="ttta__x-turn-switch"><img src="media/cross.svg" alt="X"><span>Turn</span><button id="tttctrl__switch" title="AI should begin"></button></div>
+            <div class="ttta__x-turn-switch"><img src="media/cross.svg" alt="X"><span>Turn</span><button class="button" id="tttctrl__switch" title="Play as Circle (o)"></button></div>
             <div class="ttta__x-turn-ai"><img src="media/cross.svg" alt="X"><span>Turn (AI)</span></div>
             <div class="ttta__o-won"><img src="media/circle.svg" alt="O"><span>Winner!</span></div>
             <div class="ttta__o-won-ai"><img src="media/circle.svg" alt="O"><span>Winner! (AI)</span></div>
@@ -59,8 +63,42 @@
         <footer id="footer">
             <a href="https://github.com/patrickgold/tictactoe" rel="noreferrer noopener">View on GitHub</a>&nbsp;&nbsp;&bull;&nbsp;&nbsp;
             <!--<a href="./privacy.html" rel="noreferrer noopener">Privacy Policy</a>&nbsp;&nbsp;&bull;&nbsp;&nbsp;-->
-            <span>v0.3.1</span>
+            <span>v0.4.0</span>
         </footer>
+        <label id="tictactoe-help" for="show-help-dialog">
+            <label class="content" for="#">
+                <label class="button" for="show-help-dialog" title="Close this dialog">X</label>
+                <h2 class="how-to-play">How to play</h2>
+                <h3>Player vs AI</h3>
+                <p>You can select between the modes "Easy", "Medium" and "Impossible". To begin playing, make a first move as cross or click on the circle button to let the AI make the first move. Then, try to place your circles or crosses in a way the AI can't defend itself anymore. Winner is the player who has three of his symbols in a row, either horizontal, vertical or diagonal. At any time you can click on Restart or change the game mode to start a new game. Have fun!</p>
+                <h3>Player vs Player</h3>
+                <p>Basically the same as the Player vs AI modes, but in this case every move (cross + circle) is made by a human player. Play against your friend and have fun!</p>
+                <h2 class="keyboard-shortcuts">Keyboard Shortcuts</h2>
+                <table>
+                    <tr>
+                        <th>Key</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td><span class="key">?</span></td>
+                        <td>Show this help dialog.</td>
+                    </tr>
+                    <tr>
+                        <td><span class="key">r</span></td>
+                        <td>Restart the game.</td>
+                    </tr>
+                    <tr>
+                        <td><span class="key">o</span>or<span class="key multi">0</span></td>
+                        <td>Play as Circle (AI game mode only).</td>
+                    </tr>
+                    <tr>
+                        <td><span class="key">1</span>...<span class="key multi">9</span></td>
+                        <td>Make a move on the field with the pressed number (NumPad or default).<br>Structure of the game field:<br>7 8 9<br>4 5 6<br>1 2 3</td>
+                    </tr>
+                </table>
+                <div style="min-height:1px;"></div>
+            </label>
+        </div>
     </div>
     <script src="scripts/TicTacToe.js"></script>
     <script src="scripts/main.js"></script>
