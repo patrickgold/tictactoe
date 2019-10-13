@@ -29,7 +29,9 @@ window.onload = function () {
         } else if (e.key == "r" && !showHelpDialogEle.checked) {
             ttt.restart();
         } else if ((e.key == "0" || e.key == "o") && !showHelpDialogEle.checked) {
-            ttt.startGame(ttt._game.mode, true, true);
+            if (ttt._game.turnCount == 0 && ttt._game.mode != TTT.mode.playerVsPlayer) {
+                ttt.startGame(ttt._game.mode, true, true);
+            }
         }
     }, false);
 };

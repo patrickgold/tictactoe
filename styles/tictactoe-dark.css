@@ -1,0 +1,91 @@
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #222;
+        color: #eee;
+    }
+    .button {
+        background-color: #444;
+        color: #eee;
+    }
+    .button:hover {
+        border-color: #666;
+    }
+    .button:active {
+        background-color: #666;
+    }
+    .select {
+        background-color: #111;
+        color: #eee;
+    }
+    .select > select option {
+        background-color: #111;
+        color: #eee;
+    }
+    .select:hover {
+        border-color: #666;
+    }
+    .select:active {
+        background-color: #666;
+    }
+    .select::after {
+        filter: invert();
+    }
+
+
+    #tictactoe {
+        background-color: #333;
+    }
+    #tictactoe > .tictactoe__row > button {
+        background-color: #222;
+    }
+    #tictactoe > .tictactoe__row > button[data-state="cross"],
+    #tictactoe > .tictactoe__row > button[data-state="circle"] {
+        background-color: #111;
+    }
+    #tictactoe:not([data-player-turn="empty"]) > .tictactoe__row > button[data-state="empty"]:hover {
+        background-color: #111;
+        border-color: #666;
+    }
+    #tictactoe[data-player-turn="cross"] > .tictactoe__row > button[data-state="empty"]:hover::after,
+    #tictactoe[data-player-turn="circle"] > .tictactoe__row > button[data-state="empty"]:hover::after {
+        opacity: 0.65;
+    }
+
+
+    #tictactoe-advisor > div > #tttctrl__switch {
+        background-color: #111;
+    }
+    #tictactoe-advisor:not([data-advisor="draw"]) > div > span {
+        border-left-color: #444;
+    }
+
+
+    #tictactoe-help > .content {
+        background-color: #111;
+        border-color: #666;
+        border-radius: 4px;
+        display: flex;
+        flex-direction: column;
+        font-size: 0.83em;
+        height: calc(100% - 8px);
+        max-height: 600px;
+        overflow-y: auto;
+        position: relative;
+        width: calc(100% - 8px);
+        max-width: 800px;
+    }
+    #tictactoe-help > .background {
+        background-color: rgba(0,0,0,0.65);
+    }
+    #tictactoe-help > .content > h2 {
+        border-bottom-color: #444;
+    }
+    #tictactoe-help > .content > table td,
+    #tictactoe-help > .content > table th {
+        border-color: #444;
+    }
+    #tictactoe-help > .content .key {
+        background-color: #333;
+        color: #eee;
+    }
+}
