@@ -1,6 +1,12 @@
 window.onload = function () {
     // Main entry point
 
+    var dmt = new DarkModeToggle({
+        darkModeStylesheetURL: "styles/tictactoe-dark.css",
+        mode: DMT.mode.auto,
+        toggle: document.getElementById("dark-mode-toggle"),
+    });
+
     var ttt = new TicTacToe(document.getElementById("tictactoe"), document.getElementById("tictactoe-advisor"));
     document.getElementById("tttctrl__mode").value = TTT.mode.playerVsAIMedium;
     ttt.startGame(TTT.mode.playerVsAIMedium, TTT.player.random);

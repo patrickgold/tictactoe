@@ -1,0 +1,106 @@
+
+
+#dark-mode-toggle {
+    --track-bg-color: #fff;
+    --thumb-bg-color: #eee;
+    --thumb-border-color: #ccc;
+    --thumb-filter: none;
+    --thumb-label-bg-color: #ccc;
+
+    display: block;
+    height: 32px;
+    width: 86px;
+}
+#dark-mode-toggle[data-mode="dark"] {
+    --track-bg-color: #000;
+    --thumb-bg-color: #333;
+    --thumb-border-color: #666;
+    --thumb-filter: invert();
+    --thumb-label-bg-color: #666;
+}
+#dark-mode-toggle:not([data-mode]) {
+    display: none;
+}
+
+#dark-mode-toggle > .track {
+    background-color: var(--track-bg-color);
+    border-radius: 32px;
+    display: block;
+    height: 100%;
+    position: relative;
+    width: 100%;
+}
+
+#dark-mode-toggle > .track > .thumb {
+    background-color: var(--thumb-bg-color);
+    border: 2px solid var(--thumb-border-color);
+    border-radius: 100%;
+    display: block;
+    height: 22px;
+    margin: 3px;
+    position: absolute;
+    top: 0;
+    transition: 200ms ease;
+    width: 22px;
+    z-index: 2;
+}
+#dark-mode-toggle > .track > .thumb::after {
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: 16px 16px;
+    content: "";
+    display: block;
+    height: 100%;
+    filter: var(--thumb-filter);
+    width: 100%;
+}
+#dark-mode-toggle > #dark-mode-toggle-m0:checked ~ .track > .thumb::after {
+    background-image: url(../media/dmt-light.svg);
+}
+#dark-mode-toggle > #dark-mode-toggle-m1:checked ~ .track > .thumb::after {
+    background-image: url(../media/dmt-auto.svg);
+}
+#dark-mode-toggle > #dark-mode-toggle-m2:checked ~ .track > .thumb::after {
+    background-image: url(../media/dmt-dark.svg);
+}
+
+#dark-mode-toggle > .track > label {
+    border-radius: 100%;
+    cursor: pointer;
+    display: block;
+    height: 26px;
+    margin: 3px;
+    position: absolute;
+    top: 0;
+    width: 26px;
+    z-index: 1;
+}
+#dark-mode-toggle > .track > label::after {
+    background-color: var(--thumb-label-bg-color);
+    border-radius: 100%;;
+    content: "";
+    display: block;
+    height: 4px;
+    transform: translate(11px, 11px);
+    transition: 200ms ease;
+    width: 4px;
+}
+#dark-mode-toggle > .track > label:hover::after {
+    height: 8px;
+    transform: translate(9px, 9px);
+    width: 8px;
+}
+
+#dark-mode-toggle > .track > #dark-mode-toggle-l0,
+#dark-mode-toggle > #dark-mode-toggle-m0:checked ~ .track > .thumb {
+    left: 0;
+}
+#dark-mode-toggle > .track > #dark-mode-toggle-l1,
+#dark-mode-toggle > #dark-mode-toggle-m1:checked ~ .track > .thumb {
+    left: 50%;
+    transform: translateX(-16px);
+}
+#dark-mode-toggle > .track > #dark-mode-toggle-l2,
+#dark-mode-toggle > #dark-mode-toggle-m2:checked ~ .track > .thumb {
+    right: 0;
+}

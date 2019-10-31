@@ -41,29 +41,28 @@ const TTT = Object.freeze({
 });
 
 class TicTacToe {
-    _game = {
-        __aiImpossible: {
-            isLShapeCircle: false,
-            isTriangleCircle: false,
-            isStepShapeCross: false,
-        },
-        activePlayerTurn: 0,
-        advisorElement: null,
-        aiMoveTimeoutID: 0,
-        field: [],
-        isAITurn: false,
-        isRunning: false,
-        mode: 0,
-        tttElement: null,
-        turnCount: 0,
-    };
-
     /**
      * Contructs a new instance of TicTacToe.
      * @param {HTMLElement} tttElement The main game field html element.
      * @param {HTMLElement} advisorElement The advisor html element.
      */
     constructor(tttElement, advisorElement) {
+        this._game = {
+            __aiImpossible: {
+                isLShapeCircle: false,
+                isTriangleCircle: false,
+                isStepShapeCross: false,
+            },
+            activePlayerTurn: 0,
+            advisorElement: null,
+            aiMoveTimeoutID: 0,
+            field: [],
+            isAITurn: false,
+            isRunning: false,
+            mode: 0,
+            tttElement: null,
+            turnCount: 0,
+        };
         this._game.tttElement = tttElement;
         this._game.advisorElement = advisorElement;
         let that = this;

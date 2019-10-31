@@ -157,6 +157,15 @@ a {
 }
 
 
+#tictactoe-header {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+}
+
+
 #tictactoe-ctrl {
     display: flex;
     flex-direction: row;
@@ -168,7 +177,7 @@ a {
     display: flex;
     flex-direction: row;
 }
-#tictactoe-ctrl > .buttons > .button:nth-child(n) {
+#tictactoe-ctrl > .buttons > .button:nth-child(1) {
     margin-right: 8px;
 }
 
@@ -244,6 +253,16 @@ a {
     opacity: 1.0;
     z-index: 1;
 }
+#tictactoe-advisor > noscript {
+    align-items: center;
+    color: red;
+    display: flex;
+    flex-direction: center;
+    font-style: italic;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+}
 
 
 #tictactoe-help {
@@ -258,7 +277,7 @@ a {
     width: 100%;
     z-index: -1;
 }
-#show-help-dialog:checked + #body #tictactoe-help {
+#show-help-dialog:checked ~ #body #tictactoe-help {
     opacity: 1;
     z-index: 9000;
 }

@@ -6,13 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>TicTacToe</title>
     <link rel="stylesheet" href="styles/tictactoe.css" type="text/css">
-    <link rel="stylesheet" href="styles/tictactoe-dark.css" type="text/css">
+    <link rel="stylesheet" href="styles/dark-mode-toggle.css" type="text/css">
 </head>
 
 <body>
     <input type="checkbox" id="show-help-dialog" value="false" style="display:none;">
     <div id="body">
-        <h1>TicTacToe</h1>
+        <div id="tictactoe-header">
+            <h1>TicTacToe</h1>
+            <div id="dark-mode-toggle"></div>
+        </div>
         <div id="tictactoe-ctrl">
             <div class="select">
                 <select id="tttctrl__mode" title="Select game mode">
@@ -38,6 +41,7 @@
             <div class="ttta__o-turn"><img src="media/circle.svg" alt="O"><span>Turn</span></div>
             <div class="ttta__o-turn-ai"><img src="media/circle.svg" alt="O"><span>Turn (AI)</span></div>
             <div class="ttta__draw"><span>Draw!</span></div>
+            <noscript>JS is required to run this game!</noscript>
         </div>
         <div id="tictactoe" data-player-turn="empty">
             <!-- row 1 -->
@@ -64,7 +68,7 @@
         <footer id="footer">
             <a href="https://github.com/patrickgold/tictactoe" rel="noreferrer noopener">View on GitHub</a>&nbsp;&nbsp;&bull;&nbsp;&nbsp;
             <!--<a href="./privacy.html" rel="noreferrer noopener">Privacy Policy</a>&nbsp;&nbsp;&bull;&nbsp;&nbsp;-->
-            <span>v0.4.2</span>
+            <span>v0.4.3</span>
         </footer>
         <div id="tictactoe-help">
             <label class="background" for="show-help-dialog"></label>
@@ -102,6 +106,7 @@
             </div>
         </div>
     </div>
+    <script src="scripts/DarkModeToggle.js"></script>
     <script src="scripts/TicTacToe.js"></script>
     <script src="scripts/main.js"></script>
 </body>
