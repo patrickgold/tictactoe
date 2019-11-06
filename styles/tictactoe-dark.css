@@ -1,79 +1,41 @@
-body {
-    background-color: #222;
-    color: #eee;
-}
-.button {
-    background-color: #444;
-    color: #eee;
-}
-.button:hover {
-    border-color: #666;
-}
-.button:active {
-    background-color: #666;
-}
-.select {
-    background-color: #111;
-    color: #eee;
-}
-.select > select option {
-    background-color: #111;
-    color: #eee;
-}
-.select:hover {
-    border-color: #666;
-}
-.select:active {
-    background-color: #666;
-}
-.select::after {
-    filter: invert();
-}
+/*!tictactoe-dark.css
+ * Dark style for project TicTacToe.
+ */
 
+:root {
+    --page-cross-color: #db9a0f;
+    --page-circle-color: #20db0f;
+    --page-bg-color: #222;
+    --page-text-color: #eee;
 
-#tictactoe {
-    background-color: #333;
-}
-#tictactoe > .tictactoe__row > button {
-    background-color: #222;
-}
-#tictactoe > .tictactoe__row > button[data-state="cross"],
-#tictactoe > .tictactoe__row > button[data-state="circle"] {
-    background-color: #111;
-}
-#tictactoe:not([data-player-turn="empty"]) > .tictactoe__row > button[data-state="empty"]:hover {
-    background-color: #111;
-    border-color: #666;
-}
-#tictactoe[data-player-turn="cross"] > .tictactoe__row > button[data-state="empty"]:hover::after,
-#tictactoe[data-player-turn="circle"] > .tictactoe__row > button[data-state="empty"]:hover::after {
-    opacity: 0.65;
-}
+    --button-bg-color: #444;
+    --button-border-color-hover-active: #666;
 
+    --noscript-text-color: #ff0000;
 
-#tictactoe-advisor > div > #tttctrl__switch {
-    background-color: #111;
-}
-#tictactoe-advisor:not([data-advisor="draw"]) > div > span {
-    border-left-color: #444;
-}
+    --select-bg-color: #111;
+    --select-border-color-hover-active: var(--button-border-color-hover-active);
+    --select-filter--after: invert();
 
+    --scrollbar-thumb-color: #444;
+    --scrollbar-track-color: var(--page-bg-color);
 
-#tictactoe-help > .content {
-    background-color: #111;
-    border-color: #666;
-}
-#tictactoe-help > .background {
-    background-color: rgba(0,0,0,0.65);
-}
-#tictactoe-help > .content > h2 {
-    border-bottom-color: #444;
-}
-#tictactoe-help > .content > table td,
-#tictactoe-help > .content > table th {
-    border-color: #444;
-}
-#tictactoe-help > .content .key {
-    background-color: #333;
-    color: #eee;
+    --ttt-bg-color: #333;
+    --ttt-button-bg-color: var(--page-bg-color);
+    --ttt-button-bg-color-hover: #111;
+    --ttt-button-border-color-hover: var(--button-border-color-hover-active);
+    --ttt-button-set-bg-color: #111;
+    --ttt-button-x-won-border-color: var(--page-cross-color);
+    --ttt-button-o-won-border-color: var(--page-circle-color);
+
+    --ttta-button-bg-color: #111;
+    --ttta-divider-border-color: #444;
+
+    --ttth-bg-color: #111;
+    --ttth-border-color: #666;
+    --ttth-border-children-color: #444;
+    --ttth-howtoplay-text-color: var(--page-cross-color);
+    --ttth-key-bg-color: #333;
+    --ttth-keyboardshortcut-text-color: var(--page-circle-color);
+    --ttth-wrapper-bg-color: rgba(0,0,0,0.65);
 }
