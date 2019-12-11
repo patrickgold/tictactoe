@@ -263,34 +263,48 @@ a {
     white-space: nowrap;
     z-index: 0;
 }
-#tictactoe-advisor > div > img {
-    height: 24px;
-    margin: 0 6px 0 0;
-    width: 24px;
-}
-#tictactoe-advisor > div > #tttctrl__switch {
-    background-color: var(--ttta-button-bg-color);
-    display: block;
-    height: 36px;
-    margin: 0 0 0 24px;
-    padding: 0;
-    position: relative;
-    width: 36px;
-}
-#tictactoe-advisor > div > #tttctrl__switch::after {
-    background-image: url(../media/circle.svg);
+#tictactoe-advisor:not([data-advisor="draw"]) > div::before {
+    /* -webkit-mask: no-repeat;
+    mask: no-repeat; */
     background-position: center center;
     background-repeat: no-repeat;
     background-size: 24px 24px;
     content: "";
     display: block;
     height: 24px;
-    left: 50%;
-    pointer-events: none !important;
-    position: absolute;
-    top: 50%;
-    transform: translate(-50%, -50%);
+    margin: 0 6px 0 0;
     width: 24px;
+}
+#tictactoe-advisor[data-advisor="xWon"] > div.ttta__x-won::before,
+#tictactoe-advisor[data-advisor="xWonAI"] > div.ttta__x-won-ai::before,
+#tictactoe-advisor[data-advisor="xTurn"] > div.ttta__x-turn::before,
+#tictactoe-advisor[data-advisor="xTurnSwitch"] > div.ttta__x-turn-switch::before,
+#tictactoe-advisor[data-advisor="xTurnAI"] > div.ttta__x-turn-ai::before {
+    /* background-color: var(--page-cross-color);
+    -webkit-mask-image: url(../media/cross.svg);
+    mask-image: url(../media/cross.svg); */
+    background-image: url(../media/cross.svg);
+}
+#tictactoe-advisor[data-advisor="oWon"] > div.ttta__o-won::before,
+#tictactoe-advisor[data-advisor="oWonAI"] > div.ttta__o-won-ai::before,
+#tictactoe-advisor[data-advisor="oTurn"] > div.ttta__o-turn::before,
+#tictactoe-advisor[data-advisor="oTurnAI"] > div.ttta__o-turn-ai::before {
+    /* background-color: var(--page-circle-color);
+    -webkit-mask-image: url(../media/circle.svg);
+    mask-image: url(../media/circle.svg); */
+    background-image: url(../media/circle.svg);
+}
+#tictactoe-advisor > div > #tttctrl__switch {
+    background-color: var(--ttta-button-bg-color);
+    background-image: url(../media/circle.svg);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: 24px 24px;
+    display: block;
+    height: 36px;
+    margin: 0 0 0 24px;
+    padding: 0;
+    width: 36px;
 }
 #tictactoe-advisor:not([data-advisor="draw"]) > div > span {
     border-left: 2px solid var(--ttta-divider-border-color);
