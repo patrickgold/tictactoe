@@ -1,4 +1,6 @@
-"use strict";
+/*!TicTacToe.js
+ * Core class file for the game TicTacToe.
+ */
 
 const TTT = Object.freeze({
     advisor: Object.freeze({
@@ -41,6 +43,8 @@ const TTT = Object.freeze({
 });
 
 class TicTacToe {
+    "use strict";
+
     /**
      * Contructs a new instance of TicTacToe.
      * @param {HTMLElement} tttElement The main game field html element.
@@ -567,6 +571,18 @@ class TicTacToe {
      */
     getOtherPlayer(player) {
         return player == TTT.player.cross ? TTT.player.circle : TTT.player.cross;
+    }
+
+    /**
+     * Resets the Win Stats internal counter and updates the UI.
+     */
+    resetWinStats() {
+        this._game.stats.cross = 0;
+        this._game.stats.circle = 0;
+        this._game.stats.draw = 0;
+        this._game.stats.crossElement.dataset.value = 0;
+        this._game.stats.circleElement.dataset.value = 0;
+        this._game.stats.drawElement.dataset.value = 0;
     }
 
     /**

@@ -22,6 +22,10 @@ window.onload = function () {
     document.getElementById("tttctrl__switch").addEventListener("click", function (e) {
         ttt.startGame(ttt._game.mode, true, true);
     }, false);
+
+    document.getElementById("tttctrl__reset-stats").addEventListener("click", function (e) {
+        ttt.resetWinStats();
+    }, false);
     
     document.body.addEventListener("keypress", function (e) {
         let showHelpDialogEle = document.getElementById("show-help-dialog");
@@ -34,6 +38,8 @@ window.onload = function () {
             showHelpDialogEle.checked = !showHelpDialogEle.checked;
         } else if (e.key == "r" && !showHelpDialogEle.checked) {
             ttt.restart();
+        } else if (e.key == "R" && !showHelpDialogEle.checked) {
+            ttt.resetWinStats();
         } else if ((e.key == "0" || e.key == "o") && !showHelpDialogEle.checked) {
             if (ttt._game.turnCount == 0 && ttt._game.mode != TTT.mode.playerVsPlayer) {
                 ttt.startGame(ttt._game.mode, true, true);

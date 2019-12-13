@@ -43,11 +43,7 @@
     --ttth-wrapper-bg-color: rgba(0,0,0,0.35);
 }
 
-
-/********************/
-/*** Basic styles ***/
-/********************/
-
+/* #region Basic Styles */
 html,body{height:100%;}
 body {
     background-color: var(--page-bg-color);
@@ -136,14 +132,9 @@ a {
     width: 100%;
     max-width: 300px;
 }
+/* #endregion Basic Styles */
 
-/*** End of: Basic Styles ***/
-
-
-/*****************/
-/*** TicTacToe ***/
-/*****************/
-
+/* #region TicTacToe Game Field */
 #tictactoe {
     background-color: var(--ttt-bg-color);
     border-radius: 4px;
@@ -215,8 +206,9 @@ a {
 #tictactoe > .tictactoe__row > button[data-state="circle"]::after {
     background-image: url(../media/circle.svg);
 }
+/* #endregion TicTacToe Game Field */
 
-
+/* #region TicTacToe Header */
 #tictactoe-header {
     align-items: center;
     display: flex;
@@ -224,8 +216,9 @@ a {
     justify-content: space-between;
     width: 100%;
 }
+/* #endregion TicTacToe Header */
 
-
+/* #region TicTacToe Ctrl */
 #tictactoe-ctrl {
     display: flex;
     flex-direction: row;
@@ -240,13 +233,14 @@ a {
 #tictactoe-ctrl > .buttons > .button:nth-child(1) {
     margin-right: 8px;
 }
+/* #endregion TicTacToe Ctrl */
 
-
+/* #region TicTacToe Stats */
 #tictactoe-stats {
     align-items: center;
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
+    justify-content: space-between;
     margin: 8px 0;
     width: 100%;
 }
@@ -256,12 +250,11 @@ a {
     display: inline-block;
     height: 24px;
     padding: 4px;
-    width: 48px;
 }
 #tictactoe-stats > div::before {
     background-position: center center;
     background-repeat: no-repeat;
-    background-size: 100% 100%;
+    background-size: 75% 75%;
     content: "";
     display: inline-block;
     height: 24px;
@@ -282,12 +275,18 @@ a {
     display: inline-block;
     height: 24px;
     line-height: 24px;
-    margin-left: 8px;
+    margin: 0 8px;
     transition: 200ms ease;
     vertical-align: top;
 }
+#tictactoe-stats > button.button {
+    height: 32px;
+    padding: 4px;
+    width: 32px;
+}
+/* #endregion TicTacToe Stats */
 
-
+/* #region TicTacToe Advisor */
 #tictactoe-advisor {
     cursor: default;
     display: block;
@@ -383,8 +382,9 @@ a {
     height: 100%;
     width: 100%;
 }
+/* #endregion TicTacToe Advisor */
 
-
+/* #region TicTacToe Help */
 #tictactoe-help {
     align-items: center;
     display: flex;
@@ -487,27 +487,22 @@ a {
 #tictactoe-help > .content .key.multi {
     margin-left: 8px;
 }
+/* #endregion TicTacToe Help */
 
-
+/* #region Footer */
 #footer {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    margin: 16px 0 0 0;
+    margin: 16px 0;
 }
+/* #endregion Footer */
 
-/*** End of: TicTacToe ***/
-
-
-/************************/
-/*** Custom Scrollbar ***/
-/************************/
-
+/* #region Custom Scrollbar */
 /** For Firefox Browser **/
 :root {
     scrollbar-color: var(--scrollbar-thumb-color) var(--scrollbar-track-color);
 }
-
 /** For Chromium-based browsers **/
 ::-webkit-scrollbar {
     width: initial;
@@ -518,5 +513,4 @@ a {
 ::-webkit-scrollbar-thumb {
     background: var(--scrollbar-thumb-color);
 }
-
-/*** End of: Custom Scrollbar ***/
+/* #endregion Custom Scrollbar */

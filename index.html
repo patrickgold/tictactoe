@@ -31,9 +31,10 @@
             </div>
         </div>
         <div id="tictactoe-stats">
-            <div id="ttts__x" data-value="0"></div>
-            <div id="ttts__o" data-value="0"></div>
-            <div id="ttts__draw" data-value="0"></div>
+            <div id="ttts__x" data-value="0" title="cross wins"></div>
+            <div id="ttts__o" data-value="0" title="circle wins"></div>
+            <div id="ttts__draw" data-value="0" title="draws"></div>
+            <button class="button" id="tttctrl__reset-stats" title="Reset Win Stats">R</button>
         </div>
         <div id="tictactoe-advisor" data-advisor="empty">
             <div class="ttta__x-won"><span>Winner!</span></div>
@@ -73,7 +74,7 @@
         <footer id="footer">
             <a href="https://github.com/patrickgold/tictactoe" rel="noreferrer noopener">View on GitHub</a>&nbsp;&nbsp;&bull;&nbsp;&nbsp;
             <!--<a href="./privacy.html" rel="noreferrer noopener">Privacy Policy</a>&nbsp;&nbsp;&bull;&nbsp;&nbsp;-->
-            <span>v0.4.6</span>
+            <span>v0.4.7</span>
         </footer>
         <div id="tictactoe-help">
             <label class="background" for="show-help-dialog"></label>
@@ -97,6 +98,10 @@
                     <tr>
                         <td><span class="key">r</span></td>
                         <td>Restart the game.</td>
+                    </tr>
+                    <tr>
+                        <td><span class="key">shift</span>+<span class="key multi">r</span></td>
+                        <td>Reset the win stats.</td>
                     </tr>
                     <tr>
                         <td><span class="key">o</span>or<span class="key multi">0</span></td>
