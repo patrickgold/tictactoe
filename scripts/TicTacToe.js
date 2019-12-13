@@ -60,11 +60,22 @@ class TicTacToe {
             isAITurn: false,
             isRunning: false,
             mode: 0,
+            stats: {
+                cross: 0,
+                crossElement: null,
+                circle: null,
+                circleElement: null,
+                draw: 0,
+                drawElement: null
+            },
             tttElement: null,
             turnCount: 0,
         };
         this._game.tttElement = tttElement;
         this._game.advisorElement = advisorElement;
+        this._game.stats.crossElement = document.getElementById("ttts__x");
+        this._game.stats.circleElement = document.getElementById("ttts__o");
+        this._game.stats.drawElement = document.getElementById("ttts__draw");
         let that = this;
         tttElement.addEventListener("click", function (e) {
             that.handleClick(e);
@@ -491,6 +502,12 @@ class TicTacToe {
                 for (j = 0; j < c.length; j++) {
                     document.getElementById("tttf__" + c[j]).classList.add("won");
                 }
+                // write stats
+                if (f[c[0] - 1] == TTT.player.cross) {
+                    this._game.stats.crossElement.dataset.value = ++this._game.stats.cross;
+                } else if (f[c[0] - 1] == TTT.player.circle) {
+                    this._game.stats.circleElement.dataset.value = ++this._game.stats.circle;
+                }
                 return true;
             }
         }
@@ -499,6 +516,7 @@ class TicTacToe {
             //alert("draw!");
             this._consoleLog("Game has ended. It is a draw!");
             this._game.advisorElement.setAttribute("data-advisor", TTT.advisor.draw);
+            this._game.stats.drawElement.dataset.value = ++this._game.stats.draw;
             return true;
         }
         return false;

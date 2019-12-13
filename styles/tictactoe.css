@@ -29,6 +29,8 @@
     --ttt-button-x-won-border-color: var(--page-cross-color);
     --ttt-button-o-won-border-color: var(--page-circle-color);
 
+    --ttts-field-bg-color: #eee;
+
     --ttta-button-bg-color: #eee;
     --ttta-divider-border-color: #bbb;
 
@@ -148,6 +150,7 @@ a {
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
+    margin: 8px 0;
     padding: 6px;
     width: 240px;
 }
@@ -227,7 +230,7 @@ a {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    margin: 0 0 16px 0;
+    margin: 8px 0;
     width: 100%;
 }
 #tictactoe-ctrl > .buttons {
@@ -239,11 +242,57 @@ a {
 }
 
 
+#tictactoe-stats {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    margin: 8px 0;
+    width: 100%;
+}
+#tictactoe-stats > div {
+    background-color: var(--ttts-field-bg-color);
+    border-radius: 4px;
+    display: inline-block;
+    height: 24px;
+    padding: 4px;
+    width: 48px;
+}
+#tictactoe-stats > div::before {
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    content: "";
+    display: inline-block;
+    height: 24px;
+    vertical-align: top;
+    width: 24px;
+}
+#tictactoe-stats > div#ttts__x::before {
+    background-image: url(../media/cross.svg);
+}
+#tictactoe-stats > div#ttts__o::before {
+    background-image: url(../media/circle.svg);
+}
+#tictactoe-stats > div#ttts__draw::before {
+    background-image: url(../media/draw.svg);
+}
+#tictactoe-stats > div::after {
+    content: attr(data-value);
+    display: inline-block;
+    height: 24px;
+    line-height: 24px;
+    margin-left: 8px;
+    transition: 200ms ease;
+    vertical-align: top;
+}
+
+
 #tictactoe-advisor {
     cursor: default;
     display: block;
     height: 36px;
-    margin: 0 0 16px 0;
+    margin: 8px 0;
     position: relative;
     width: 100%;
 }
@@ -444,7 +493,7 @@ a {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    margin: 24px 0 0 0;
+    margin: 16px 0 0 0;
 }
 
 /*** End of: TicTacToe ***/
