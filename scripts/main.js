@@ -20,7 +20,7 @@ window.onload = function () {
     }, false);
 
     document.getElementById("tttctrl__switch").addEventListener("click", function (e) {
-        ttt.startGame(ttt._game.mode, true, true);
+        ttt.startGame(ttt.game.mode, true, true);
     }, false);
 
     document.getElementById("tttctrl__reset-stats").addEventListener("click", function (e) {
@@ -32,7 +32,7 @@ window.onload = function () {
         if (["1", "2", "3", "4", "5", "6", "7", "8", "9"].includes(e.key) && !showHelpDialogEle.checked) {
             ttt.handleClick({
                 target: document.getElementById("tttf__" + e.key),
-            }, true);
+            });
             e.preventDefault();
         } else if (e.key == "?") {
             showHelpDialogEle.checked = !showHelpDialogEle.checked;
@@ -41,8 +41,8 @@ window.onload = function () {
         } else if (e.key == "R" && !showHelpDialogEle.checked) {
             ttt.resetWinStats();
         } else if ((e.key == "0" || e.key == "o") && !showHelpDialogEle.checked) {
-            if (ttt._game.turnCount == 0 && ttt._game.mode != TTT.mode.playerVsPlayer) {
-                ttt.startGame(ttt._game.mode, true, true);
+            if (ttt.game.turnCount == 0 && ttt.game.mode != TTT.mode.playerVsPlayer) {
+                ttt.startGame(ttt.game.mode, true, true);
             }
         }
     }, false);

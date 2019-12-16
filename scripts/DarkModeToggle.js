@@ -1,3 +1,7 @@
+/*!DarkModeToggle.js
+ * Class file for the dark mode toggle.
+ */
+
 const DMT = Object.freeze({
     mode: Object.freeze({
         auto: "auto",
@@ -8,6 +12,12 @@ const DMT = Object.freeze({
 });
 
 class DarkModeToggle {
+    "use strict";
+
+    /**
+     * Contructs a new instance of DarkModeToggle.
+     * @param {Object} options Initial options.
+     */
     constructor (options) {
         this._consoleLog("Setting up DarkModeToggle");
         this.options = Object.assign({
@@ -63,7 +73,7 @@ class DarkModeToggle {
                 label.id = "dark-mode-toggle-l" + i;
                 label.title = "Set theme to " + v + ".";
                 label.addEventListener("click", function (e) {
-                    input.checked = true; // [label for] does does some weird things.
+                    input.checked = true; // [label for] does some weird things.
                     that.set(v);
                 }, false);
                 track.appendChild(label);
@@ -78,7 +88,6 @@ class DarkModeToggle {
                 link.parentElement.removeChild(link);
                 this.options.darkModeStylesheet = null;
             }
-            this.options.toggle.setAttribute("data-mode", mode);
         } else if (mode == DMT.mode.dark) {
             if (link == null) {
                 link = document.createElement("link");
@@ -88,10 +97,14 @@ class DarkModeToggle {
                 this.options.darkModeStylesheet = link;
                 document.head.appendChild(link);
             }
-            this.options.toggle.setAttribute("data-mode", mode);
         }
+        this.options.toggle.dataset.mode = mode;
     }
 
+    /**
+     * Sets the current theme.
+     * @param {string} mode The name of the theme mode to be applied.
+     */
     set(mode) {
         this.options.mode = mode;
         localStorage.setItem(DMT.storageKey, mode);
@@ -107,7 +120,7 @@ class DarkModeToggle {
 
     /**
      * Formats a string before outputting it.
-     * @param {String} str The string to be formatted and outputted.
+     * @param {string} str The string to be formatted and outputted.
      */
     _consoleLog(str) {
         let prefix = ">> DarkModeToggle : ";

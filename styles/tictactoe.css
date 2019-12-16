@@ -172,19 +172,19 @@ a {
 #tictactoe > .tictactoe__row > button[data-state="circle"].won {
     border-color: var(--ttt-button-o-won-border-color);
 }
-#tictactoe:not([data-player-turn="empty"]) > .tictactoe__row > button[data-state="empty"]:hover {
+#tictactoe:not([data-active-player="empty"]) > .tictactoe__row > button[data-state="empty"]:hover {
     background-color: var(--ttt-button-bg-color-hover);
     border-color: var(--ttt-button-border-color-hover);
     cursor: pointer;
 }
-#tictactoe:not([data-player-turn="empty"]) > .tictactoe__row > button[data-state="empty"]:active {
+#tictactoe:not([data-active-player="empty"]) > .tictactoe__row > button[data-state="empty"]:active {
     transform: translateY(2px);
 }
-#tictactoe[data-player-turn="cross"] > .tictactoe__row > button[data-state="empty"]:hover::after {
+#tictactoe[data-active-player="cross"] > .tictactoe__row > button[data-state="empty"]:hover::after {
     background-image: url(../media/cross.svg);
     opacity: 0.35;
 }
-#tictactoe[data-player-turn="circle"] > .tictactoe__row > button[data-state="empty"]:hover::after {
+#tictactoe[data-active-player="circle"] > .tictactoe__row > button[data-state="empty"]:hover::after {
     background-image: url(../media/circle.svg);
     opacity: 0.35;
 }
