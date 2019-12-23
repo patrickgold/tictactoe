@@ -323,20 +323,20 @@ a {
     margin: 0 6px 0 0;
     width: 24px;
 }
-#tictactoe-advisor[data-advisor="xWon"] > div.ttta__x-won::before,
-#tictactoe-advisor[data-advisor="xWonAI"] > div.ttta__x-won-ai::before,
-#tictactoe-advisor[data-advisor="xTurn"] > div.ttta__x-turn::before,
-#tictactoe-advisor[data-advisor="xTurnSwitch"] > div.ttta__x-turn-switch::before,
-#tictactoe-advisor[data-advisor="xTurnAI"] > div.ttta__x-turn-ai::before {
+#tictactoe-advisor[data-advisor="x_won"] > div.ttta__x-won::before,
+#tictactoe-advisor[data-advisor="x_won_comp"] > div.ttta__x-won-comp::before,
+#tictactoe-advisor[data-advisor="x_turn"] > div.ttta__x-turn::before,
+#tictactoe-advisor[data-advisor="x_turn_switch"] > div.ttta__x-turn-switch::before,
+#tictactoe-advisor[data-advisor="x_turn_comp"] > div.ttta__x-turn-comp::before {
     /* background-color: var(--page-cross-color);
     -webkit-mask-image: url(../media/cross.svg);
     mask-image: url(../media/cross.svg); */
     background-image: url(../media/cross.svg);
 }
-#tictactoe-advisor[data-advisor="oWon"] > div.ttta__o-won::before,
-#tictactoe-advisor[data-advisor="oWonAI"] > div.ttta__o-won-ai::before,
-#tictactoe-advisor[data-advisor="oTurn"] > div.ttta__o-turn::before,
-#tictactoe-advisor[data-advisor="oTurnAI"] > div.ttta__o-turn-ai::before {
+#tictactoe-advisor[data-advisor="o_won"] > div.ttta__o-won::before,
+#tictactoe-advisor[data-advisor="o_won_comp"] > div.ttta__o-won-comp::before,
+#tictactoe-advisor[data-advisor="o_turn"] > div.ttta__o-turn::before,
+#tictactoe-advisor[data-advisor="o_turn_comp"] > div.ttta__o-turn-comp::before {
     /* background-color: var(--page-circle-color);
     -webkit-mask-image: url(../media/circle.svg);
     mask-image: url(../media/circle.svg); */
@@ -359,15 +359,15 @@ a {
     display: block;
     padding: 0 0 0 6px;
 }
-#tictactoe-advisor[data-advisor="xWon"] > div.ttta__x-won,
-#tictactoe-advisor[data-advisor="xWonAI"] > div.ttta__x-won-ai,
-#tictactoe-advisor[data-advisor="xTurn"] > div.ttta__x-turn,
-#tictactoe-advisor[data-advisor="xTurnSwitch"] > div.ttta__x-turn-switch,
-#tictactoe-advisor[data-advisor="xTurnAI"] > div.ttta__x-turn-ai,
-#tictactoe-advisor[data-advisor="oWon"] > div.ttta__o-won,
-#tictactoe-advisor[data-advisor="oWonAI"] > div.ttta__o-won-ai,
-#tictactoe-advisor[data-advisor="oTurn"] > div.ttta__o-turn,
-#tictactoe-advisor[data-advisor="oTurnAI"] > div.ttta__o-turn-ai,
+#tictactoe-advisor[data-advisor="x_won"] > div.ttta__x-won,
+#tictactoe-advisor[data-advisor="x_won_comp"] > div.ttta__x-won-comp,
+#tictactoe-advisor[data-advisor="x_turn"] > div.ttta__x-turn,
+#tictactoe-advisor[data-advisor="x_turn_switch"] > div.ttta__x-turn-switch,
+#tictactoe-advisor[data-advisor="x_turn_comp"] > div.ttta__x-turn-comp,
+#tictactoe-advisor[data-advisor="o_won"] > div.ttta__o-won,
+#tictactoe-advisor[data-advisor="o_won_comp"] > div.ttta__o-won-comp,
+#tictactoe-advisor[data-advisor="o_turn"] > div.ttta__o-turn,
+#tictactoe-advisor[data-advisor="o_turn_comp"] > div.ttta__o-turn-comp,
 #tictactoe-advisor[data-advisor="draw"] > div.ttta__draw {
     opacity: 1.0;
     z-index: 1;

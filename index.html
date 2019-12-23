@@ -19,10 +19,10 @@
         <div id="tictactoe-ctrl">
             <div class="select">
                 <select id="tttctrl__mode" title="Select game mode">
-                    <option value="playerVsAIEasy">AI | Easy</option>
-                    <option value="playerVsAIMedium">AI | Medium</option>
-                    <option value="playerVsAIImpossible">AI | Impossible</option>
-                    <option value="playerVsPlayer" selected="selected">Player vs Player</option>
+                    <option value="pvc_easy">PvC | Easy</option>
+                    <option value="pvc_medium" selected="selected">PvC | Medium</option>
+                    <option value="pvc_impossible">PvC | Impossible</option>
+                    <option value="pvp">Player vs Player</option>
                 </select>
             </div>
             <div class="buttons">
@@ -38,14 +38,14 @@
         </div>
         <div id="tictactoe-advisor" data-advisor="empty">
             <div class="ttta__x-won"><span>Winner!</span></div>
-            <div class="ttta__x-won-ai"><span>Winner! (AI)</span></div>
+            <div class="ttta__x-won-comp"><span>Winner! (Comp)</span></div>
             <div class="ttta__x-turn"><span>Turn</span></div>
             <div class="ttta__x-turn-switch"><span>Turn</span><button class="button" id="tttctrl__switch" title="Play as Circle (o)"></button></div>
-            <div class="ttta__x-turn-ai"><span>Turn (AI)</span></div>
+            <div class="ttta__x-turn-comp"><span>Turn (Comp)</span></div>
             <div class="ttta__o-won"><span>Winner!</span></div>
-            <div class="ttta__o-won-ai"><span>Winner! (AI)</span></div>
+            <div class="ttta__o-won-comp"><span>Winner! (Comp)</span></div>
             <div class="ttta__o-turn"><span>Turn</span></div>
-            <div class="ttta__o-turn-ai"><span>Turn (AI)</span></div>
+            <div class="ttta__o-turn-comp"><span>Turn (Comp)</span></div>
             <div class="ttta__draw"><span>Draw!</span></div>
             <noscript>JS is required to run this game!</noscript>
         </div>
@@ -74,17 +74,17 @@
         <footer id="footer">
             <a href="https://github.com/patrickgold/tictactoe" rel="noreferrer noopener">View on GitHub</a>&nbsp;&nbsp;&bull;&nbsp;&nbsp;
             <!--<a href="./privacy.html" rel="noreferrer noopener">Privacy Policy</a>&nbsp;&nbsp;&bull;&nbsp;&nbsp;-->
-            <span>v0.4.9</span>
+            <span>v0.5.0</span>
         </footer>
         <div id="tictactoe-help">
             <label class="background" for="show-help-dialog"></label>
             <div class="content">
                 <label class="button" for="show-help-dialog" title="Close this dialog">X</label>
                 <h2 class="how-to-play">How to play</h2>
-                <h3>Player vs AI</h3>
-                <p>You can select between the modes "Easy", "Medium" and "Impossible". To begin playing, make a first move as cross or click on the circle button to let the AI make the first move. Then, try to place your circles or crosses in a way the AI can't defend itself anymore. Winner is the player who has three of his symbols in a row, either horizontal, vertical or diagonal. At any time you can click on Restart or change the game mode to start a new game. Have fun!</p>
+                <h3>Player vs Computer</h3>
+                <p>You can select between the modes "Easy", "Medium" and "Impossible". To begin playing, make a first move as cross or click on the circle button to let the Computer make the first move. Then, try to place your circles or crosses in a way the Computer can't defend itself anymore. Winner is the player who has three of his symbols in a row, either horizontal, vertical or diagonal. At any time you can click on Restart or change the game mode to start a new game. Have fun!</p>
                 <h3>Player vs Player</h3>
-                <p>Basically the same as the Player vs AI modes, but in this case every move (cross + circle) is made by a human player. Play against your friend and have fun!</p>
+                <p>Basically the same as the Player vs Computer modes, but in this case every move (cross + circle) is made by a human player. Play against your friend and have fun!</p>
                 <h2 class="keyboard-shortcuts">Keyboard Shortcuts</h2>
                 <table>
                     <tr>
@@ -105,7 +105,7 @@
                     </tr>
                     <tr>
                         <td><span class="key">o</span>or<span class="key multi">0</span></td>
-                        <td>Play as Circle (AI game mode only).</td>
+                        <td>Play as Circle (PvC game mode only).</td>
                     </tr>
                     <tr>
                         <td><span class="key">1</span>...<span class="key multi">9</span></td>
